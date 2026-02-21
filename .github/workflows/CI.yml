@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - 'Release'
-      - 'Release-*.*.*'   # e.g. Release-1.12.3, Release-2.0.0, etc.
+      - 'releases-*.*.*'   # e.g. Release-1.12.3, Release-2.0.0, etc.
 
 env:
   IMAGE_NAME: ${{vars.DOCKERHUB_BYTSER_USERNAME}}/${{vars.DOCKERHUB_IMAGE_NAME}}  # check these vars are correct
@@ -27,8 +27,8 @@ jobs:
           echo "Branch: $BRANCH"
 
           # If branch is like "Release-1.2.3" use VERSION="1.2.3"
-          if [[ "$BRANCH" == Release-* ]]; then
-            VERSION="${BRANCH#Release-}"
+          if [[ "$BRANCH" == releases-* ]]; then
+            VERSION="${BRANCH#releases-}"
 
           # If branch is exactly "Release", use "latest" tag
           elif [[ "$BRANCH" == "Release" ]]; then
