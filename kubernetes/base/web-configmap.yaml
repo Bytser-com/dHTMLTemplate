@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: example-web-config
+data:
+  API_URL: "https://api.example.com"
+  DEF_LANG: "en_US"

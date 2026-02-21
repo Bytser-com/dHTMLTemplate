@@ -1,0 +1,5 @@
+Use this folder to save different kinds of tests.
+These tests can be used in automated pipelines, or can be used for manual testing. 
+You can create subfolders to organize your tests by type, such as integration tests or end-to-end tests.
+Please do not place integrated unit tests here, these should be placed in the correct path.
+Place tests here such as integration tests, end-to-end tests, GUI tests, load tests, security tests

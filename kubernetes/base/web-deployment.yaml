@@ -1,0 +1,77 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: example-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: example-web
+  template:
+    metadata:
+      labels:
+        app: example-web
+    spec:
+      # Spread instances across nodes (anti-affinity)
+      topologySpreadConstraints:
+          - maxSkew: 1
+            topologyKey: kubernetes.io/hostname
+            whenUnsatisfiable: ScheduleAnyway
+            labelSelector:
+              matchLabels:
+                app: example-web
+
+      containers:
+        - name: example-web
+          image: example-web
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            readOnlyRootFilesystem: true
+            allowPrivilegeEscalation: false
+          envFrom:
+            - configMapRef:
+                name: example-web-config
+          volumeMounts:
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
+            - name: nginx-run
+              mountPath: /var/run
+          ports:
+            - containerPort: 80
+              name: http
+          startupProbe:
+            httpGet:
+              path: /
+              port: 80
+            # Give the app time to start before checking for liveness
+            periodSeconds: 1
+            timeoutSeconds: 2
+            failureThreshold: 16
+            initialDelaySeconds: 16
+
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            # Kill the pod if it is unhealthy
+            periodSeconds: 10
+            timeoutSeconds: 2
+            failureThreshold: 3
+            initialDelaySeconds: 0
+
+          # Available resources – tune as needed
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "512Mi"
+
+volumes:
+        - name: nginx-cache
+          emptyDir:
+            medium: Memory
+        - name: nginx-run
+          emptyDir:
+            medium: Memory

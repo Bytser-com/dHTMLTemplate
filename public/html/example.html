@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en" data-lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+  <title data-i18n="meta.title">Pro Web Starter Template</title>
+  <meta name="description" data-i18n="meta.description"
+        content="A professional HTML starter template with responsive layout, multi-language hooks, and API-ready forms." />
+
+  <!-- Favicon (adjust paths as needed) -->
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+
+  <!-- Main stylesheet -->
+  <link rel="stylesheet" href="/css/style.css" />
+
+  <!-- Example basic critical styles for things referenced in app.js (toasts, errors) -->
+  <style>
+    .input-error {
+      border-color: #ef4444 !important;
+    }
+    .toast-container {
+      position: fixed;
+      inset-inline: 0;
+      bottom: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      z-index: 9999;
+      pointer-events: none;
+    }
+    .toast {
+      pointer-events: auto;
+      padding: 0.75rem 1rem;
+      border-radius: 999px;
+      font-size: 0.875rem;
+      color: #fff;
+      background: #111827;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: opacity 200ms ease, transform 200ms ease;
+      transform: translateY(0);
+      opacity: 1;
+    }
+    .toast-info { background: #0ea5e9; }
+    .toast-success { background: #10b981; }
+    .toast-error { background: #ef4444; }
+    .toast-hide {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  </style>
+</head>
+<body>
+  <!-- =====================================================
+       SKIP LINK FOR ACCESSIBILITY
+  ====================================================== -->
+  <a href="#main" class="sr-only" style="
+      position:absolute;
+      left:-9999px;
+      top:auto;
+      width:1px;
+      height:1px;
+      overflow:hidden;
+      ">
+    <span data-i18n="skip.toMain">Skip to main content</span>
+  </a>
+
+  <!-- =====================================================
+       HEADER / NAVBAR
+  ====================================================== -->
+  <header class="navbar">
+    <div class="container navbar-inner">
+      <a href="/" class="navbar-brand" data-i18n="brand.name">
+        Acme Corp
+      </a>
+
+      <!-- Language switcher -->
+      <div class="flex gap-sm">
+        <label for="langSwitcher" class="sr-only" style="position:absolute;left:-9999px;">
+          <span data-i18n="label.language">Language</span>
+        </label>
+        <select id="langSwitcher" aria-label="Language" class="lang-switcher">
+          <option value="en" selected>EN</option>
+          <option value="nl">NL</option>
+          <option value="fr">FR</option>
+          <!-- Add more languages as needed -->
+        </select>
+
+        <!-- Mobile nav toggle -->
+        <button class="btn btn-icon nav-toggle" type="button" aria-expanded="false" aria-controls="navMenu">
+          <span class="sr-only" style="position:absolute;left:-9999px;" data-i18n="nav.toggle">Toggle navigation</span>
+          ☰
+        </button>
+      </div>
+
+      <!-- Navigation links -->
+      <nav aria-label="Primary">
+        <ul id="navMenu" class="nav-links">
+          <li><a href="#features" data-i18n="nav.features">Features</a></li>
+          <li><a href="#login-section" data-i18n="nav.login">Login</a></li>
+          <li><a href="#search-section" data-i18n="nav.search">Search</a></li>
+          <li><a href="#contact" data-i18n="nav.contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- =====================================================
+       MAIN CONTENT
+  ====================================================== -->
+  <main id="main">
+    <!-- HERO SECTION -->
+    <section class="hero">
+      <div class="container hero-inner animate-fade-in">
+        <div class="hero-copy">
+          <h1 class="hero-title" data-i18n="hero.title">
+            Build fast, modern, API-driven web apps.
+          </h1>
+          <p class="hero-subtitle" data-i18n="hero.subtitle">
+            A production-ready starter template with clean HTML, responsive layout, multi-language hooks, and ready-to-use JavaScript patterns.
+          </p>
+
+          <div class="hero-actions">
+            <a href="#login-section" class="btn btn-primary hover-lift" data-i18n="hero.ctaPrimary">
+              Get started
+            </a>
+            <a href="#features" class="btn btn-outline hover-lift" data-i18n="hero.ctaSecondary">
+              View features
+            </a>
+          </div>
+
+          <div class="mt-md">
+            <span class="badge" data-i18n="hero.badge">
+              API-ready · Responsive · Multi-language
+            </span>
+          </div>
+        </div>
+
+        <div class="hero-visual flex-center">
+          <!-- Placeholder illustration (replace with your SVG/IMG) -->
+          <div class="card hover-lift animate-pop" style="max-width: 420px;">
+            <h2 class="mb-sm" data-i18n="hero.card.title">Live application status</h2>
+            <p class="mb-sm" data-i18n="hero.card.body">
+              Connect your front-end to any REST API or WebSocket endpoint and show real-time data.
+            </p>
+            <ul class="mb-sm">
+              <li data-i18n="hero.card.item1">✔ API abstraction layer</li>
+              <li data-i18n="hero.card.item2">✔ WebSocket auto-reconnect</li>
+              <li data-i18n="hero.card.item3">✔ Form handling with validation</li>
+            </ul>
+            <small data-i18n="hero.card.footer">Demo only – replace with your own widget or chart.</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section id="features" class="mb-lg">
+      <div class="container">
+        <header class="text-center mb-md">
+          <h2 data-i18n="features.title">Features</h2>
+          <p data-i18n="features.subtitle">
+            This template is structured for real projects, not just demos.
+          </p>
+        </header>
+
+        <div class="grid grid-auto-fit">
+          <article class="card animate-slide-up">
+            <h3 data-i18n="features.item1.title">API communication</h3>
+            <p data-i18n="features.item1.body">
+              Centralized fetch wrapper with JSON handling, timeouts, and error propagation.
+            </p>
+          </article>
+
+          <article class="card animate-slide-up">
+            <h3 data-i18n="features.item2.title">Live sockets</h3>
+            <p data-i18n="features.item2.body">
+              Reconnecting WebSocket client for live updates, notifications, and dashboards.
+            </p>
+          </article>
+
+          <article class="card animate-slide-up">
+            <h3 data-i18n="features.item3.title">Forms & validation</h3>
+            <p data-i18n="features.item3.body">
+              Form helper with required checks, API submission, and toast-based feedback.
+            </p>
+          </article>
+
+          <article class="card animate-slide-up">
+            <h3 data-i18n="features.item4.title">Multi-language ready</h3>
+            <p data-i18n="features.item4.body">
+              All visible texts use translation keys via data attributes. Plug in your i18n layer.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- LOGIN / AUTH FORM SECTION -->
+    <section id="login-section" class="mb-lg">
+      <div class="container grid grid-2">
+        <div>
+          <header class="mb-md">
+            <h2 data-i18n="login.title">Sign in to your account</h2>
+            <p data-i18n="login.subtitle">
+              Use the form below to authenticate. This integrates with the example API client.
+            </p>
+          </header>
+
+          <form id="loginForm" novalidate>
+            <div class="mb-sm">
+              <label for="email" data-i18n="login.email.label">Email address</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                inputmode="email"
+                autocomplete="email"
+                required
+                data-required="true"
+                data-i18n-placeholder="login.email.placeholder"
+                placeholder="you@example.com"
+              />
+              <small class="text-muted" data-i18n="login.email.helper">
+                We will never share your email.
+              </small>
+            </div>
+
+            <div class="mb-sm">
+              <label for="password" data-i18n="login.password.label">Password</label>
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="current-password"
+                required
+                data-required="true"
+                data-i18n-placeholder="login.password.placeholder"
+                placeholder="••••••••"
+              />
+            </div>
+
+            <div class="flex-between mb-md">
+              <label class="flex gap-xs">
+                <input type="checkbox" name="remember" />
+                <span data-i18n="login.remember">Remember me</span>
+              </label>
+              <a href="#" data-i18n="login.forgot">Forgot password?</a>
+            </div>
+
+            <button type="submit" class="btn btn-primary hover-lift" data-i18n="login.submit">
+              Sign in
+            </button>
+          </form>
+
+          <p class="mt-md" data-i18n="login.signup">
+            No account yet? <a href="#">Create one now</a>.
+          </p>
+        </div>
+
+        <!-- Sidebar info -->
+        <aside class="card animate-slide-left">
+          <h3 class="mb-sm" data-i18n="login.sidebar.title">Security note</h3>
+          <p class="mb-sm" data-i18n="login.sidebar.body">
+            In production, always use HTTPS, secure cookies, CSRF protection, and server-side validation.
+          </p>
+          <ul>
+            <li data-i18n="login.sidebar.item1">Password never stored in plain text</li>
+            <li data-i18n="login.sidebar.item2">JWT or session-based authentication</li>
+            <li data-i18n="login.sidebar.item3">Rate limiting and IP throttling</li>
+          </ul>
+        </aside>
+      </div>
+    </section>
+
+    <!-- LIVE SEARCH SECTION (DEBOUNCE + API) -->
+    <section id="search-section" class="mb-lg">
+      <div class="container">
+        <header class="mb-md text-center">
+          <h2 data-i18n="search.title">Live search</h2>
+          <p data-i18n="search.subtitle">
+            This section demonstrates debounced API calls and dynamic DOM updates.
+          </p>
+        </header>
+
+        <div class="card">
+          <label for="searchInput" class="mb-xs" data-i18n="search.label">
+            Search items
+          </label>
+          <input
+            id="searchInput"
+            type="search"
+            name="search"
+            autocomplete="off"
+            data-i18n-placeholder="search.placeholder"
+            placeholder="Type to search…"
+          />
+
+          <div id="searchResults" class="mt-md">
+            <!-- Results from setupLiveSearch() will be injected here -->
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT SECTION (STATIC FORM EXAMPLE) -->
+    <section id="contact" class="mb-lg">
+      <div class="container grid grid-2">
+        <div>
+          <header class="mb-md">
+            <h2 data-i18n="contact.title">Contact us</h2>
+            <p data-i18n="contact.subtitle">
+              This is a simple, static example form. Wire it up to your own endpoint.
+            </p>
+          </header>
+
+          <form id="contactForm" novalidate>
+            <div class="mb-sm">
+              <label for="contactName" data-i18n="contact.name.label">Name</label>
+              <input
+                id="contactName"
+                name="name"
+                type="text"
+                autocomplete="name"
+                data-required="true"
+                data-i18n-placeholder="contact.name.placeholder"
+                placeholder="Your name"
+              />
+            </div>
+
+            <div class="mb-sm">
+              <label for="contactEmail" data-i18n="contact.email.label">Email</label>
+              <input
+                id="contactEmail"
+                name="email"
+                type="email"
+                autocomplete="email"
+                data-required="true"
+                data-i18n-placeholder="contact.email.placeholder"
+                placeholder="you@example.com"
+              />
+            </div>
+
+            <div class="mb-sm">
+              <label for="contactMessage" data-i18n="contact.message.label">Message</label>
+              <textarea
+                id="contactMessage"
+                name="message"
+                rows="4"
+                data-required="true"
+                data-i18n-placeholder="contact.message.placeholder"
+                placeholder="How can we help you?"
+              ></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-secondary hover-lift" data-i18n="contact.submit">
+              Send message
+            </button>
+          </form>
+        </div>
+
+        <aside class="card">
+          <h3 class="mb-sm" data-i18n="contact.sidebar.title">Company info</h3>
+          <p class="mb-sm" data-i18n="contact.sidebar.body">
+            Replace this block with your real address, phone, or support details.
+          </p>
+          <table class="table-responsive">
+            <tbody>
+              <tr>
+                <th scope="row" data-i18n="contact.sidebar.emailLabel">Email</th>
+                <td>support@example.com</td>
+              </tr>
+              <tr>
+                <th scope="row" data-i18n="contact.sidebar.phoneLabel">Phone</th>
+                <td>+32 123 45 67 89</td>
+              </tr>
+              <tr>
+                <th scope="row" data-i18n="contact.sidebar.hoursLabel">Hours</th>
+                <td data-i18n="contact.sidebar.hoursValue">Mon–Fri, 09:00–17:00</td>
+              </tr>
+            </tbody>
+          </table>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- =====================================================
+       FOOTER
+  ====================================================== -->
+  <footer class="mb-md">
+    <div class="container flex-between">
+      <p>
+        <span data-i18n="footer.copyright">
+          © 2026 Acme Corp. All rights reserved.
+        </span>
+      </p>
+      <p>
+        <a href="#" data-i18n="footer.privacy">Privacy policy</a> ·
+        <a href="#" data-i18n="footer.terms">Terms of service</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- =====================================================
+       SCRIPTS
+  ====================================================== -->
+  <script src="/env.js"></script>
+  <script src="/js/example.js"></script>
+
+  <!-- Example inline script only for nav toggle + simple i18n hook (optional) -->
+  <script>
+    // Responsive nav toggle (adds/removes .is-open from nav)
+    (function () {
+      const toggle = document.querySelector('.nav-toggle');
+      const nav = document.querySelector('.nav-links');
+      if (!toggle || !nav) return;
+
+      toggle.addEventListener('click', () => {
+        const isOpen = nav.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    })();
+
+    // Simple language attribute update (you can replace with full i18n logic)
+    (function () {
+      const html = document.documentElement;
+      const select = document.getElementById('langSwitcher');
+      if (!select) return;
+
+      select.addEventListener('change', () => {
+        const lang = select.value;
+        html.lang = lang;
+        html.setAttribute('data-lang', lang);
+
+        // At this point you would:
+        // 1) load translation JSON for `lang`
+        // 2) update all [data-i18n] and [data-i18n-placeholder] texts
+        // This is left as a project-specific implementation.
+      });
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+  - ../../base
+
+patches:
+  - target:
+      kind: Deployment
+      name: example-api
+    patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 3
+      - op: replace
+        path: /spec/containers/imagePullPolicy
+        value: IfNotPresent
+
+  - target:
+      kind: ConfigMap
+      name: example-web-config
+    patch: |-
+      - op: replace
+        path: /data/API_URL
+        value: "https://prod-api.example.com"
+      - op: replace
+        path: /data/DEF_LANG
+        value: "System"
+
+  - target:
+      kind: HorizontalPodAutoscaler
+      name: example-web-hpa
+    patch: |-
+      - op: replace
+          path: /spec/minReplicas
+          value: 2
+      - op: replace
+          path: /spec/maxReplicas
+          value: 10

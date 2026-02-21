@@ -1,0 +1,32 @@
+version: "3.9"
+
+services:
+  web:
+    container_name: example-web
+    image: registry/example-web:0.0.1
+
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-qO-", "http://localhost/"]
+      interval: 10s
+      timeout: 3s
+      retries: 3
+    networks:
+      - example-net
+
+    # Make filesystem read-only except for needed tmp dirs (more production-grade)
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+
+networks:
+  example-net:
+    name: example-net
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.30.10.0/24
+          gateway: 172.30.10.1
